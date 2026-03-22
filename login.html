@@ -27,14 +27,33 @@
 
   <main>
     <h1>Login</h1>
-    <form action="#" method="post">
+    <form id="loginForm">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" required>
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" required>
       <button type="submit">Login</button>
     </form>
+    <div id="message"></div>
     <p><a href="index.html">Back to Home</a></p>
   </main>
 </body>
 </html>
+<script>
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const response = await fetch('http://localhost:5000/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password })
+  });
+  const result = await response.json();
+  document.getElementById('message').textContent = result.message;
+  if (result.success) {
+    // Redirect or handle success
+    window.location.href = 'index.html';
+  }
+});
+</script>
