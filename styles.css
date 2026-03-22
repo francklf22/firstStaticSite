@@ -6,3 +6,11 @@ body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica
 main{background:linear-gradient(90deg,rgba(0,0,0,0.18),rgba(255,255,255,0.02));padding:2rem 3rem;border-radius:16px;backdrop-filter: blur(6px);box-shadow:0 8px 30px rgba(0,0,0,0.2);text-align:center}
 h1{font-size:clamp(2rem,6vw,4rem);margin:0 0 0.5rem}
 p{margin:0;font-size:1.125rem;opacity:0.95}
+.btn{display:inline-block;padding:0.75rem 1.5rem;background:#ff5a7a;color:#fff;text-decoration:none;border-radius:8px;margin-top:1rem;transition:background 0.3s}
+.btn:hover{background:#e04a6a}
+form{display:flex;flex-direction:column;gap:1rem;margin:1rem 0}
+label{font-weight:500}
+input[type="text"],input[type="password"]{padding:0.5rem;border:1px solid rgba(255,255,255,0.3);border-radius:4px;background:rgba(255,255,255,0.1);color:#fff}
+input::placeholder{color:#ccc}
+button[type="submit"]{padding:0.75rem;background:#ff5a7a;color:#fff;border:none;border-radius:8px;cursor:pointer;transition:background 0.3s}
+button[type="submit"]:hover{background:#e04a6a}
