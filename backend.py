@@ -1,20 +1,16 @@
 from flask import Flask, request, jsonify
-import mysql.connector
+import sqlite3
 import bcrypt
 import os
 
 app = Flask(__name__)
 
-# Database configuration
-DB_CONFIG = {
-    'host': 'localhost',
-    'user': 'root',  # Change if needed
-    'password': '',  # Set your MySQL root password
-    'database': 'auth_db'
-}
+DB_FILE = 'auth.db'
 
 def get_db_connection():
-    return mysql.connector.connect(**DB_CONFIG)
+    conn = sqlite3.connect(DB_FILE)
+    conn.row_factory = sqlite3.Row
+    return conn
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -27,11 +23,11 @@ def login():
 
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT password_hash FROM users WHERE username = %s', (username,))
+    cursor.execute('SELECT password_hash FROM users WHERE username = ?', (username,))
     result = cursor.fetchone()
     conn.close()
 
-    if result and bcrypt.checkpw(password.encode('utf-8'), result[0].encode('utf-8')):
+    if result and bcrypt.checkpw(password.encode('utf-8'), result[0]):
         return jsonify({'success': True, 'message': 'Login successful'})
     else:
         return jsonify({'success': False, 'message': 'Invalid credentials'})
